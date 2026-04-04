@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clients</title>
+</head>
+<body>
+    <h1>Clients</h1>
+
+    <form method="POST" action="/add-client">
+        <input type="text" name="name" placeholder="Client Name" required>
+        <button type="submit">Add Client</button>
+    </form>
+
+    <h2>Client List</h2>
+    <ul>
+        {% for client in clients %}
+            <li>{{ client.name }}</li>
+        {% endfor %}
+    </ul>
+
+    <a href="/">Back</a>
+</body>
+</html>
