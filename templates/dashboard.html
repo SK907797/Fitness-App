@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+    <title>ACEest Dashboard</title>
+    <style>
+        body { background:#111; color:white; font-family:sans-serif; }
+        .flash { padding:10px; margin:5px; border-radius:5px; }
+        .success { background:green; }
+        .danger { background:red; }
+        .info { background:blue; }
+        .client { border:1px solid #333; padding:10px; margin:10px; }
+        img { border:1px solid #555; margin-top:5px; }
+        input, select, button { margin:5px; padding:5px; }
+    </style>
+</head>
+<body>
+    {% if login %}
+        <h2>ACEest Login</h2>
+        <form method="post">
+            Username: <input type="text" name="username"><br>
+            Password: <input type="password" name="password"><br>
+            <button type="submit">Login</button>
+        </form>
+    {% else %}
+        <h2>Welcome {{ user }} ({{ role }}) <a href="{{ url_for('logout') }}" style="color:red">Logout</a></h2>
+       
+        <h3>Add Client</h3>
+        <form action="{{ url_for('add_client') }}" method="post">
+            <input type="text" name="client_name" placeholder="Client Name">
+            <button type="submit">Add</button>
+        </form>
+ 
+        <h3>Clients</h3>
+        {% for c in clients %}
+        <div class="client">
+            <b>{{ c['name'] }}</b><br>
+            Program: {{ c['program'] or "None" }} | Membership: {{ c['membership_status'] }}<br>
+            <form action="{{ url_for('add_workout', client=c['name']) }}" method="post">
+                Date: <input type="date" name="date" value="{{ today }}"><br>
+                Type: <select name="type">
+                    <option>Strength</option>
+                    <option>Hypertrophy</option>
+                    <option>Cardio</option>
+                    <option>Mobility</option>
+                </select>
+                Duration: <input type="number" name="duration" value="60">
+                Notes: <input type="text" name="notes">
+                <button type="submit">Add Workout</button>
+            </form>
+            <a href="{{ url_for('generate_program', client=c['name']) }}">Generate Program</a> |
+            <a href="{{ url_for('generate_pdf', client=c['name']) }}">PDF Report</a> |
+            <a href="{{ url_for('membership', client=c['name']) }}">Check Membership</a><br>
+            <img src="{{ url_for('chart', client=c['name']) }}" width="400">
+        </div>
+        {% endfor %}
+    {% endif %}
+ 
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endwith %}
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+<head><title>Add Workout</title></head>
+<body>
+<h2>Add Workout for {{ client }}</h2>
+<form method="post">
+  Date: <input type="date" name="date" value="{{ today }}"><br>
+  Type: <select name="type">
+    <option>Strength</option>
+    <option>Hypertrophy</option>
+    <option>Cardio</option>
+    <option>Mobility</option>
+  </select><br>
+  Duration (min): <input type="number" name="duration" value="60"><br>
+  Notes: <input type="text" name="notes"><br>
+  <button type="submit">Save</button>
+</form>
+</body>
+</html>
