@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fitness-a
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fitness
+      version: A
+  template:
+    metadata:
+      labels:
+        app: fitness
+        version: A
+    spec:
+      containers:
+      - name: fitness
+        image: shantha087/fitness-app:v3.2.4
+        ports:
+        - containerPort: 5000

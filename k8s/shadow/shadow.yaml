@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fitness-shadow
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fitness
+      track: shadow
+  template:
+    metadata:
+      labels:
+        app: fitness
+        track: shadow
+    spec:
+      containers:
+      - name: fitness
+        image: shantha087/fitness-app:latest
