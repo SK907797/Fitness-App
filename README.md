@@ -1,173 +1,167 @@
-# ACEest Fitness App – CI/CD Pipeline Assignment
-
+# ACEest Fitness & Gym – Advanced DevOps CI/CD Project
 ## Project Overview
-
-This project implements a complete **DevOps CI/CD pipeline** for the ACEest Fitness & Gym application.
-
-The original application was built using **Tkinter (desktop-based UI)** and has been successfully migrated into a **Flask web application** to enable automation, scalability, and CI/CD integration.
-
-
-
+ 
+ACEest Fitness & Gym is a Flask-based web application developed to demonstrate a complete DevOps lifecycle. This project showcases modern DevOps practices including version control, automated testing, containerization, CI/CD pipelines, code quality analysis, multiple deployment strategies, and cloud deployment.
+ 
 ## Objectives
-
-* Convert Tkinter app → Flask web app
-* Implement Version Control using GitHub
-* Add Unit Testing using Pytest
-* Containerize application using Docker
-* Automate CI/CD using GitHub Actions
-* Implement Jenkins build pipeline
-
-
-
+* Develop a functional Flask-based gym management system
+* Implement version control using Git & GitHub
+* Automate testing using Pytest
+* Containerize the application using Docker
+* Build CI/CD pipelines using GitHub Actions and Jenkins
+* Perform static code analysis using SonarQube
+* Implement multiple deployment strategies
+* Deploy application on Kubernetes
+* Deploy application on cloud platform
+ 
 ## Tech Stack
-
-* Python (Flask)
-* SQLite Database
-* Pytest
-* Docker
-* GitHub Actions
-* Jenkins
-
-
-
-## Application Features
-
-* User Login System (Admin)
-* Client Management
-* AI-based Program Generation
-* Workout Tracking
-* Membership Tracking
-* PDF Report Generation
-* Progress Chart Visualization
-
-
-
-## Local Setup Instructions
-
-### 1. Clone Repository
-
-```bash
-git clone https://github.com/SK907797/Fitness-App.git
-cd fitness-app
-```
-
-### 2. Create Virtual Environment
-
-```bash
+| Category |    Tools |
+|----------|--------|
+| Backend   | Python, Flask|
+| Testing   | Pytest|
+| Version Control   | Git, GitHub|
+| CI/CD | GitHub Actions, Jenkins|
+| Containerization  | Docker|
+| Code Quality  | SonarQube|
+| Orchestration | Kubernetes|
+| Cloud Platform    | Render|
+| Registry  | Docker Hub|
+ 
+## Project Structure
+fitness-app/
+│── app.py
+│── requirements.txt
+│── Dockerfile
+│── Jenkinsfile
+│── sonar-project.properties
+│── test_app.py
+│
+├── legacy_versions/
+├── k8s/
+│   ├── rolling/
+│   ├── blue-green/
+│   ├── canary/
+│   ├── shadow/
+│   ├── ab-testing/
+│
+└── .github/workflows/main.yml
+ 
+## Local Setup
+git clone https://github.com/SK907797/Fitness-App
+cd aceest-fitness-app
 python -m venv venv
 venv\Scripts\activate
-```
-
-### 3. Install Dependencies
-
-```bash
 pip install -r requirements.txt
-```
-
-### 4. Run Application
-
-```bash
 python app.py
-```
 
-### 5. Access Application
-
-Open browser:
-
-```
+### Access:
 http://127.0.0.1:5000
-```
-
-### Default Login
-
-```
+Default Login:
+ 
 Username: admin
 Password: admin
+
+### Running Tests
+pytest -v test_app.py
+### Docker Usage
+#### Build image:
+docker build -t fitness-app .
+#### Run container:
+docker run -p 5000:5000 fitness-app
+#### Docker Hub Images
+shantha087/fitness-app:v1.0
+shantha087/fitness-app:v2.0
+shantha087/fitness-app:v3.0
+shantha087/fitness-app:v3.2.4
+shantha087/fitness-app:latest
 ```
-
-
-
-## Running Tests
-
+## CI/CD Pipeline
+### GitHub Actions
+ 
+Triggered on every push:
+ 
+* Checkout Code
+* Install Dependencies
+* Run Pytest
+* Build Docker Image
+ 
+### Jenkins
+ 
+Used for build validation:
+ 
+* Source Checkout
+* Build Validation
+* Test Stage
+* SonarQube Stage
+* Build Completion
+ 
+### SonarQube Integration
+* Static code analysis performed
+* Identifies bugs, vulnerabilities, code smells
+* Ensures maintainability
+### Kubernetes Deployment
+ 
+#### Deploy application:
 ```bash
-pytest
+kubectl apply -f k8s/deployment.yaml
+kubectl apply -f k8s/service.yaml
 ```
-
-
-
-## Docker Usage
-
-### Build Image
-
-```bash
-docker build -t aceest-app .
+#### Check:
+kubectl get pods
+kubectl get svc
+## Deployment Strategies Implemented
+### 1. Rolling Update
+kubectl set image deployment/aceest-app aceest-app=prabakaran2311/aceest-app:latest
+**Zero downtime upgrade**
+ 
+### 2. Blue-Green Deployment
+* Two environments: Blue (current), Green (new)
+* Traffic switched via service selector
+ 
+**Instant rollback capability**
+ 
+### 3. Canary Deployment
+* Stable + Canary deployments
+* Traffic split using replica distribution
+ 
+**Gradual rollout**
+ 
+### 4. A/B Testing ✅
+#### Application-Level:
+* Flask randomly serves two UI versions
+#### Kubernetes-Level:
+* Separate deployments for Version A & B
+ 
+**User experience comparison**
+ 
+### 5. Shadow Deployment ✅
+* New version deployed but not exposed
+* Used for testing without impacting users
+ 
+**Safe validation**
+ 
+## Cloud Deployment
+ 
+Application deployed using container image on cloud platform:
+ 
+* Platform: Render
+* Deployment Method: Docker Image
+* Public URL available
+ 
+ 
+## Architecture Flow
+```text
+Developer → GitHub → GitHub Actions → Docker Hub → Cloud (Render)
+                                     → Kubernetes (Local)
+                                     → Jenkins (Build Validation)
+                                     → SonarQube (Code Quality)
 ```
-
-### Run Container
-
-```bash
-docker run -p 5000:5000 aceest-app
-```
-
-
-
-## CI/CD Pipeline (GitHub Actions)
-
-The pipeline is triggered on every:
-
-* push
-* pull_request
-
-### Steps:
-
-1. Checkout code
-2. Setup Python
-3. Install dependencies
-4. Run tests (pytest)
-5. Build Docker image
-
-
-
-## Jenkins Integration
-
-Jenkins is used as a **build automation tool**.
-
-### Functionality:
-
-* Executes build pipeline
-* Runs tests
-* Validates application
-
-### Note:
-
-Due to plugin/network constraints, Jenkins was configured using a simplified build approach, ensuring successful build execution.
-
-
-
-## CI/CD Workflow
-
-```
-GitHub Push → GitHub Actions → Test → Docker Build → Jenkins Build
-```
-
-
-
 ## Key Learning Outcomes
-
-* CI/CD pipeline implementation
-* Docker containerization
-* Flask web development
-* DevOps workflow automation
-* Debugging real-world issues (Jenkins plugins, environment setup)
-
-
-
-## Conclusion
-
-This project demonstrates a complete DevOps lifecycle implementation from development to automated deployment, ensuring reliability, scalability, and continuous integration.
-
-
-
-## Author
-
-Shantha Kumar U
+* End-to-end CI/CD pipeline implementation
+* Docker containerization and versioning
+* Jenkins pipeline integration
+* SonarQube static analysis
+* Kubernetes orchestration
+* Rolling updates and deployment strategies
+* Cloud deployment fundamentals
+* Real-world DevOps workflow
