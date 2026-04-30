@@ -28,7 +28,8 @@ ACEest Fitness & Gym is a Flask-based web application developed to demonstrate a
 | Registry  | Docker Hub|
  
 ## Project Structure
-fitness-app/
+```
+aceest-fitness-app/
 │── app.py
 │── requirements.txt
 │── Dockerfile
@@ -45,6 +46,7 @@ fitness-app/
 │   ├── ab-testing/
 │
 └── .github/workflows/main.yml
+```
  
 ## Local Setup
 git clone https://github.com/SK907797/Fitness-App
